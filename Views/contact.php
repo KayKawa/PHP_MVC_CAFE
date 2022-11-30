@@ -79,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
   $controller = new ContactController();
   $controller->create();
   $params = $controller->getContents();
+  $deleteParams = $controller->delete();
   $validationList = $_SESSION['validationList'];
   $validationFlag = $_SESSION['validationFlag'];
-
 ?>
 <head>
     <meta charset="UTF-8">
@@ -178,8 +178,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <th>メールアドレス</th>
         <th>お問い合わせ内容</th>
         <th>更新</th>
+        <th>削除</th>
       </tr>
-      <?php foreach ($params['contacts'] as $contact):  ?>
+      <?php foreach ($params['contacts'] as $contact) : ?>
       <tr>
         <td><?php echo $contact["name"] ?></td>
         <td><?php echo $contact["kana"] ?></td>
@@ -187,14 +188,30 @@ document.addEventListener('DOMContentLoaded', function() {
         <td><?php echo $contact["email"] ?></td>
         <td><?php echo nl2br($contact["body"]) ?></td>
         <td>
-          <a href="/edit.php?id=<?php echo $contact['id'] ?>">
-            更新
-          </a>
+        <button type="button" onclick="location.href='/edit.php?id=<?php echo $contact['id'] ?>'">更新</button>
+        </td>
+        <td>
+        <form action="contact.php" method="post" onSubmit="return check()">
+          <input type="hidden" name="delete_id" value="<?php echo $contact["id"]; ?>">
+          <input type="submit" value="削除" name="delete">
+        </form>
         </td>
       </tr>
       <?php endforeach;  ?>
     </table>
   </div>
 </div>
+<script>
+  function check(){
 
+if(window.confirm('上記の内容でよろしいですか？')){ // 確認ダイアログを表示
+  return true; // 「OK」時は送信を実行
+}
+else{ // 「キャンセル」時の処理
+  window.alert('キャンセルされました'); // 警告ダイアログを表示
+  return false; // 送信を中止
+}
+
+}
+</script>
 <?php include("footer.php") ?>

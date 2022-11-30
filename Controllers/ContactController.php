@@ -242,4 +242,17 @@ class ContactController {
             header("location: contact.php");
         }
     }
+
+    public function delete()
+    {
+        if (isset($_POST['delete'])) {
+            $dbh = dbConnect();
+            $sql = "DELETE FROM contacts WHERE id = :id";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindValue(":id", $_POST["delete_id"], PDO::PARAM_INT);
+            $stmt->execute();
+            // 更新完了後にお問い合わせ入力画面へ遷移
+            header('location: contact.php');
+        }
+    }
 }
