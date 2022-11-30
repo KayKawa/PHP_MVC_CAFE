@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php
   require_once(ROOT_PATH.'/Controllers/ContactController.php');
   $controller = new ContactController();
-  $controller->create();
-  $params = $controller->getContents();
+  $params = $controller->detail();
+  $controller->edit($params['contact']['id']);
+  $controller->editBack();
   $validationList = $_SESSION['validationList'];
   $validationFlag = $_SESSION['validationFlag'];
 
@@ -98,102 +99,77 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php include("header.php") ?>
 <div class="container">
   <div class="left_container">
-    <h3>お問い合わせ入力画面</h3><br>
+    <h3>更新画面</h3><br>
     <h6 style="color: red;">*必須入力項目</h6>
-    <form action="contact.php" method="POST">
+    <form action="edit.php?id=<?=$params['contact']['id']?>" method="POST">
       <label for="name">氏名</label><span style="color: red;">*</span>
       <br>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             if ($validationList['name'] !== true) {
                     echo '<dd class="error" style="color:red">' . $validationList['name'] . '</dd>';
             }
         }
         ?>
       <input class="name" type="text"name="name"placeholder="氏名"
-      value="<?php echo isset($_SESSION["name"]) ? $_SESSION["name"] : ''; ?>">
+      value="<?php echo $params["contact"]["name"]  ?>">
       <span style="color:red" class="alertarea_name"></span>
       <br><br>
       <label for="kana">フリガナ</label><span style="color: red;">*</span>
       <br>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             if ($validationList['kana'] !== true) {
                   echo '<dd class="error" style="color:red">' . $validationList['kana'] . '</dd>';
             }
         }
         ?>
       <input class="kana" type="text"name="kana"placeholder="フリガナ"
-      value="<?php echo isset($_SESSION["kana"]) ? $_SESSION["kana"] : ''; ?>">
+      value="<?php echo $params["contact"]["kana"]  ?>">
       <span style="color:red" class="alertarea_kana"></span>
       <br><br>
       <label for="tel">電話番号</label>
       <br>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             if ($validationList['tel'] !== true) {
                   echo '<dd class="error" style="color:red">' . $validationList['tel'] . '</dd>';
             }
         }
         ?>
       <input class="tel" type="text" name="tel"placeholder="電話番号"
-      value="<?php echo isset($_SESSION["tel"]) ? $_SESSION["tel"] : ''; ?>">
+      value="<?php echo $params["contact"]["tel"]  ?>">
       <span style="color:red" class="alertarea_tel"></span>
       <br><br>
       <label for="email">メールアドレス</label><span style="color: red;">*</span>
       <br>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             if ($validationList['email'] !== true) {
                 echo '<dd class="error" style="color:red">' . $validationList['email'] . '</dd>';
             }
         }
         ?>
       <input class="email" type="text" name="email"placeholder="メールアドレス"
-      value="<?php echo isset($_SESSION["email"]) ? $_SESSION["email"] : ''; ?>">
+      value="<?php echo $params["contact"]["email"]  ?>">
       <span style="color:red" class="alertarea_email"></span>
       <br><br>
       <label for="body">お問い合わせ内容</label><span style="color: red;">*</span>
       <br>
       <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['update'])) {
             if ($validationList['body'] !== true) {
                 echo '<dd class="error" style="color:red">' . $validationList['body'] . '</dd>';
             }
         }
         ?>
       <textarea class="body" name="body" placeholder="お問い合わせ内容"
-      ><?php echo (isset($_SESSION["body"])) ? $_SESSION["body"] : ''; ?></textarea>
+      ><?php echo $params["contact"]["body"]  ?></textarea>
       <br><br>
-      <input type="submit" name="submit">
+      <div class="confirm_message">上記の内容でよろしいですか？</div>
+      <input type="submit" name="back" value="キャンセル" />
+      <input type="submit" name="update" value="更新" />
     </form>
-  </div>
-  <div class="right_container">
-    <h3>お問い合わせ結果</h3><br>
-    <table>
-      <tr>
-        <th>氏名</th>
-        <th>フリガナ</th>
-        <th>電話番号</th>
-        <th>メールアドレス</th>
-        <th>お問い合わせ内容</th>
-        <th>更新</th>
-      </tr>
-      <?php foreach ($params['contacts'] as $contact):  ?>
-      <tr>
-        <td><?php echo $contact["name"] ?></td>
-        <td><?php echo $contact["kana"] ?></td>
-        <td><?php echo $contact["tel"] ?></td>
-        <td><?php echo $contact["email"] ?></td>
-        <td><?php echo nl2br($contact["body"]) ?></td>
-        <td>
-          <a href="/edit.php?id=<?php echo $contact['id'] ?>">
-            更新
-          </a>
-        </td>
-      </tr>
-      <?php endforeach;  ?>
-    </table>
   </div>
 </div>
 

@@ -29,6 +29,7 @@
 
   .row {
     margin: 0 auto !important;
+    clear: both;
   }
 
   nav {
@@ -264,4 +265,57 @@
   font-weight: bold;
   padding-top: 1%;
   padding-bottom: 1%;
+}
+
+.container {
+  width: 100%;
+}
+
+.left_container {
+  float: left;
+  width: 30%;
+  padding: 2%;
+}
+
+.right_container {
+  float: right;
+  width: 70%;
+  padding: 2%;
+  border-left: 3px solid;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table tr {
+  border-bottom: solid 1px #eee;
+}
+
+table th {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: small;
+}
+
+table tr {
+  background-color: #eee;
+}
+
+table tr:hover {
+  background-color: #fff491;
+}
+
+table,
+table td {
+  text-align: left;
+  padding: 15px 3px;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
