@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <td><?php echo $contact["email"] ?></td>
         <td><?php echo nl2br($contact["body"]) ?></td>
         <td>
-        <button type="button" onclick="location.href='/edit.php?id=<?php echo $contact['id'] ?>'">更新</button>
+        <button type="button" onclick="location.href='/edit.php?id=<?php echo $contact['id'] ?>'">編集</button>
         </td>
         <td>
         <form action="contact.php" method="post" onSubmit="return check()">
